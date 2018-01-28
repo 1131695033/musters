@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.swcommon.order.mapper.OrderMapper">
+	
+	
+	<!-- 获取序列号 -->
+	<select id="getOrderNo" parameterType="map" statementType="CALLABLE"  flushCache="true">
+		<![CDATA[
+			call Prc_Seq_Comm(
+				#{inSnameen,mode=IN,jdbcType=VARCHAR},
+				#{outFormatval,mode=OUT,jdbcType=VARCHAR},
+				#{outCode,mode=OUT,jdbcType=VARCHAR},
+				#{outMsg,mode=OUT,jdbcType=VARCHAR}
+			)
+		]]>
+	</select>
+	
+</mapper>

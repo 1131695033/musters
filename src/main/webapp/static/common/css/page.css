@@ -1,0 +1,343 @@
+
+#tableWrap{
+		padding: 15px;
+	}
+	#tableWrap .tableLelt{
+		float: left;
+		width: 65%;
+	}
+	#tableWrap .tableRight{
+		float: right;
+		width: 34%;
+	}
+	#tableWrap .tableBox{
+		margin: 20px 0 0 0;
+	}
+	#tableWrap table{
+		border-collapse: collapse;
+		width: 100%;
+		line-height: 36px;
+		border-color: #ddd;
+		font-size: 14px;
+		color: #555;
+		text-align: center;
+	}
+	#tableWrap table input{
+		vertical-align: middle;
+	}
+	#tableWrap table th{
+		background-color: #eee;
+		font-weight: normal;
+		color: #888;
+		white-space: nowrap;
+		color: #676a6c;
+		border:1px solid #ddd;
+		border-collapse: collapse;
+		text-align: center;
+	}
+	#tableWrap table td{
+		outline-color: #2E2D3C;
+		border:1px solid #ddd;
+		border-collapse: collapse;
+	}
+	 .tableTitle{
+		height: 20px;
+		border-left: 2px solid #3ca2e0;
+		padding-left: 15px;
+		line-height: 20px;
+		margin-bottom: 15px;
+		font-size: 14px;
+	}
+	.tableTitle h4{
+		font-weight: normal;
+		color: #888;
+		letter-spacing: 1px;
+		font-size: 16px;
+		line-height: 20px;
+	}
+	#tableWrap table tbody tr{
+		transition:0.2s ;
+		cursor: text;
+	}
+/* 	#tableWrap table tbody tr:hover{
+		background-color: #eee;
+	} */
+	.Required{
+		color:red;
+		font-weight: bold;
+	}
+	.L_container{
+		left: -50%;
+		border: 1px solid #ddd;
+		border-radius: 5px;
+		position: absolute;
+		background-color: #fff;
+		box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+		line-height: 30px;
+		text-align: left;
+	}
+	
+	.L_containerTitle{
+		padding: 8px 14px;
+	    margin: 0;
+	    font-size: 14px;
+	    font-weight: normal;
+	    line-height: 18px;
+	    background-color: #f7f7f7;
+	    border-bottom: 1px solid #ebebeb;
+	    border-radius: 5px 5px 0 0;
+	}
+	
+	.L_containerContent{
+		padding: 8px 14px;
+		min-width:280px;;
+	}
+	.L_containerInput{
+		float: left;
+	}
+	.L_containerInput input{
+		border: 1px solid #ccc;
+		outline: 0;
+		box-sizing: border-box;
+		height: 30px;
+		line-height: 30px;
+		width: 150px;
+		padding: 0 20px 0 10px;
+		border-radius: 3px;
+		transition:0.2s ;
+	}
+	.L_containerInput input:focus{
+		border: 1px solid #66afe9;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+	}
+	.L_containerBtn{
+		float: left;
+	}
+	.L_containerBtn button{
+		box-sizing: border-box;
+		height: 30px;
+		line-height: 30px;
+		float: left;
+		margin-left: 10px;
+		font-size: 13px;
+		letter-spacing: 1px;
+		color: #555;
+		border: none;
+		border-radius: 3px;
+		outline: none;
+		transition:0.2s ;
+	}
+	.L_containerBtn button:hover{
+		color: #fff;
+		background-color: #3ca2e0;
+	}
+	.L_containerBtn button:active{
+		opacity: 0.8;
+	}
+	.L_containerBtn button.active{
+		color: #fff;
+		background-color: #3ca2e0;
+	}
+	.L_arrow{
+		position: absolute;
+	    display: block;
+	    width: 0;
+	    height: 0;
+	    border-color: transparent;
+	    border-style: solid;
+	    bottom: -22px;
+	    left: 50%;
+	    margin-left: -11px;
+	    border-top-color: #ddd;
+ 				border-bottom-width: 0;
+ 				border-width: 11px;
+	}
+	.L_arrow:after{
+	    position: absolute;
+	    display: block;
+	    width: 0;
+	    height: 0;
+	    border-color: transparent;
+	    border-style: solid;
+	    border-width: 10px;
+ 				content: "";
+ 				bottom: 1px;
+	    margin-left: -10px;
+	    border-top-color: #ffffff;
+	    border-bottom-width: 0;
+	}
+	
+	div[data-name="select"]{
+		position: relative;
+		height: 34px;
+		line-height: 34px;
+		box-sizing: border-box;
+		z-index: 100;
+		display: inline-block;
+	}
+	div[data-name="select"] input{
+		border: 1px solid #ccc;
+		width: 100%;
+		height: 100%;
+		box-sizing: border-box;
+		outline: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		line-height: 20px;
+		padding: 7px 20px 7px 10px;
+		transition: 0.2s;
+		background: url(../images/right.png) no-repeat 99% center;
+	}
+	div[data-name="select"] input:focus{
+		background: url(../images/bottom.png) no-repeat 99% center;
+		border: 1px solid #66afe9;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+	}
+	div[data-name="select"] ul{
+		display: none;
+		list-style: none;
+		position: absolute;
+		top: 20px;
+		left: 0;
+		right: 0;
+		margin: 0;
+		padding: 0;
+		border: 1px solid #ddd;
+		box-sizing: border-box;
+		border: 1px solid #66afe9;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+		border-top: none;
+		background-color: #fff;
+		border-top: none;
+		opacity: 0;
+	}
+	div[data-name="select"] li{
+		text-align:left;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		padding: 0 10px;
+		transition:0.2s ;
+		cursor: pointer;
+		font-size: 14px;
+	}
+	div[data-name="select"] li:hover{
+		background-color: #f2f2f5;
+		padding: 0 15px;
+	}		
+	
+	
+	[data-myType="select"]{
+		position:relative;
+		box-sizing: border-box;
+		background-color:#fff;
+		display: inline-block;
+		width: 100%;
+	}
+	[data-myType="select"] input{
+		background: url(../images/right.png) no-repeat 99% center;
+		transition: 0.2s;
+		border: 1px solid #ccc;
+		box-sizing: border-box;
+		height: 34px;
+		line-height: 20px;
+		padding: 7px 10px;
+		outline: none;
+		width: 100%;
+	}
+	[data-myType="select"] input:focus{
+		background: url(../images/bottom.png) no-repeat 99% center;
+		border: 1px solid #66afe9;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+	}
+	
+	.L_mySelect{
+		position: absolute;
+		padding: 0;
+		margin: 0;
+		list-style: none;
+		border: 1px solid #66afe9;
+		box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+		background-color: #fff;
+		opacity: 0;
+	}
+	.L_mySelect li{
+		text-align:left;
+		padding: 0 10px;
+		margin: 0;
+		line-height: 34px;
+		font-size: 14px;
+		color: #555;
+		transition:0.2s ;
+		cursor: pointer;
+	}
+	.L_mySelect li:hover{
+		padding-left: 15px;
+		background-color: #f2f2f5;
+	}
+	
+	
+	.inputContent{
+	
+	}
+	.inputContent .inputBox{
+		float: left;
+		margin-bottom: 10px;
+	}
+	.inputContent .inputBox>label{
+		float: left;
+		width: 30%;
+		text-align: right;
+	}
+	.inputContent .inputBox>input{
+		float: left;
+		width: 70%;
+	}
+	.inputContent .inputBox .inputDiv{
+		float: left;
+		width: 70%;
+	}
+	/* 超小屏幕（手机，小于 768px） */
+	/* 小屏幕（平板，大于等于 768px） */
+	/* 中等屏幕（桌面显示器，大于等于 992px） */
+	/* 大屏幕（大桌面显示器，大于等于 1200px） */
+	@media (max-width: 768px) {
+		.inputContent .inputBox{
+			width: 100%;
+		}
+	}
+	@media (min-width: 768px) and (max-width: 992px) {
+		.inputContent .inputBox{
+			width:50%;
+		}
+	}
+	@media (min-width: 992px) and (max-width: 1200px) { 
+		.inputContent .inputBox{
+			width: 33.33333%;
+		}
+		
+	}
+	@media (min-width: 1200px) {
+		.inputContent .inputBox{
+			width: 25%;
+		}
+	}
+	
+	
+	[data-isCheck]{
+		display:inline-block;
+		width:15px;
+		height:15px;
+		overflow:hidden;
+		background: url(../images/check.png) no-repeat 0 center;
+		transition: 0.2s;
+	}
+	[data-isCheck='true']{
+		background: url(../images/check.png) no-repeat -16px center;
+	}
+	[data-isCheck='false']{
+		background: url(../images/check.png) no-repeat 0 center;
+	}

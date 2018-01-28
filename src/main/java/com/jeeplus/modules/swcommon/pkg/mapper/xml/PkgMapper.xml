@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.swcommon.pkg.mapper.PkgMapper">
+	
+	
+
+
+	<select id="saveForNumber" parameterType="map" statementType="CALLABLE"  flushCache="true">
+		<![CDATA[
+			call  Pkg_Dm_Data_Proce.p_Exec(
+			  	#{inName,mode=IN,jdbcType=VARCHAR},
+				#{inParams,mode=IN,jdbcType=VARCHAR},
+				#{outCode,mode=OUT,jdbcType=VARCHAR},
+				#{outMsg,mode=OUT,jdbcType=VARCHAR}
+				)
+		]]>
+	</select>
+	
+	
+	<!-- 获取申请编号 -->
+	<select id="getAppNo" resultType="String">
+		SELECT
+		  pkg_dm_common.f_get_appno
+		FROM DUAL
+	</select>
+</mapper>

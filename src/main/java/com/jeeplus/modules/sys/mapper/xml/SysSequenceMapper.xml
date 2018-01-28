@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.sys.mapper.SysSequenceMapper">
+    
+	<sql id="sysSequenceColumns">
+		a.id AS "id",
+		a.sname_en AS "snameEn",
+		a.sname_cn AS "snameCn",
+		a.minval AS "minval",
+		a.maxval AS "maxval",
+		a.stepby AS "stepby",
+		a.prefix AS "prefix",
+		a.bgnvalue AS "bgnvalue",
+		a.suffix AS "suffix",
+		a.curvalue AS "curvalue",
+		a.connvar AS "connvar",
+		a.iscircul AS "iscircul",
+		a.isleftpad AS "isleftpad",
+		a.leftpadnums AS "leftpadnums",
+		a.formatval AS "formatval",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="sysSequenceJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="SysSequence" >
+		SELECT 
+			<include refid="sysSequenceColumns"/>
+		FROM sys_sequence a
+		<include refid="sysSequenceJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="SysSequence" >
+		SELECT 
+			<include refid="sysSequenceColumns"/>
+		FROM sys_sequence a
+		<include refid="sysSequenceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="snameEn != null and snameEn != ''">
+				AND a.sname_en = #{snameEn}
+			</if>
+			<if test="snameCn != null and snameCn != ''">
+				AND a.sname_cn = #{snameCn}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="SysSequence" >
+		SELECT 
+			<include refid="sysSequenceColumns"/>
+		FROM sys_sequence a
+		<include refid="sysSequenceJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO sys_sequence(
+			id,
+			sname_en,
+			sname_cn,
+			minval,
+			maxval,
+			stepby,
+			prefix,
+			bgnvalue,
+			suffix,
+			curvalue,
+			connvar,
+			iscircul,
+			isleftpad,
+			leftpadnums,
+			formatval,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{snameEn},
+			#{snameCn},
+			#{minval},
+			#{maxval},
+			#{stepby},
+			#{prefix},
+			#{bgnvalue},
+			#{suffix},
+			#{curvalue},
+			#{connvar},
+			#{iscircul},
+			#{isleftpad},
+			#{leftpadnums},
+			#{formatval},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE sys_sequence SET 	
+			sname_en = #{snameEn},
+			sname_cn = #{snameCn},
+			minval = #{minval},
+			maxval = #{maxval},
+			stepby = #{stepby},
+			prefix = #{prefix},
+			bgnvalue = #{bgnvalue},
+			suffix = #{suffix},
+			curvalue = #{curvalue},
+			connvar = #{connvar},
+			iscircul = #{iscircul},
+			isleftpad = #{isleftpad},
+			leftpadnums = #{leftpadnums},
+			formatval = #{formatval},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM sys_sequence
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE sys_sequence SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="SysSequence" statementType="STATEMENT">
+		select * FROM sys_sequence  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
