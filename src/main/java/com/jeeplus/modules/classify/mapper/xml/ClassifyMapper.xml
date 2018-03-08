@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.classify.mapper.ClassifyMapper">
+
+    <resultMap id="classifyResult" type="Classify">
+   		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="sort" column="sort" />
+		<result property="parentIds" column="parentIds" />
+		<result property="parentId" column="parentId" />
+		<result property="type" column="type" />
+		<association property="hasChildren" column="id" select="hasChildren" />
+    </resultMap>
+    
+	<sql id="classifyColumns">
+		a.id AS "id",
+		a.parent_id AS "parent.id",
+		a.name AS "name",
+		a.parent_ids AS "parentIds",
+		a.type AS "type",
+		a.sort AS "sort",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		(select b.label from sys_dict_value b where b.dict_type_id = (select id from sys_dict_type where type='service_classify' ) and b.value=a.type) typeName
+	</sql>
+	
+
+	
+
+	<sql id="classifyJoins">
+		
+	</sql>
+	
+
+    
+	<select id="get" resultType="Classify">
+		SELECT 
+			<include refid="classifyColumns"/>
+		FROM p_classify a
+		<include refid="classifyJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Classify">
+		SELECT 
+			<include refid="classifyColumns"/>
+		FROM p_classify a
+		<include refid="classifyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+			<if test="parentId != null and parentId != ''">
+				AND a.parent_id = #{parent.id}
+			</if>
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="parentIds != null and parentIds != ''">
+				AND a.parent_ids = #{parentIds}
+			</if>
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<select id="findAllList" resultType="Classify">
+		SELECT 
+			<include refid="classifyColumns"/>
+		FROM p_classify a
+		<include refid="classifyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<select id="getChildren" parameterType="String" resultMap="classifyResult">  
+        select 
+			<include refid="classifyColumns"/>
+	from p_classify a where a.parent_id = #{id} ORDER BY a.sort 
+    </select> 
+     
+    <select id="hasChildren" parameterType="String" resultType="Boolean">
+        select case when exists(select 1 from p_classify where parent_id = #{id}) then 1 else 0 end from dual
+    </select>
+    
+	<select id="findByParentIdsLike" resultType="Classify">
+		SELECT
+			a.id,
+			a.parent_id AS "parent.id",
+			a.parent_ids
+		FROM p_classify a
+		<include refid="classifyJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.parent_ids LIKE #{parentIds}
+		</where>
+		ORDER BY a.sort ASC
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO p_classify(
+			id,
+			parent_id,
+			name,
+			parent_ids,
+			type,
+			sort,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{parentId},
+			#{name},
+			#{parentIds},
+			#{type},
+			#{sort},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE p_classify SET 	
+			parent_id = #{parentId},
+			name = #{name},
+			parent_ids = #{parentIds},
+			type = #{type},
+			sort = #{sort},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="updateParentIds">
+		UPDATE p_classify SET 
+			parent_id = #{parent.id}, 
+			parent_ids = #{parentIds}
+		WHERE id = #{id}
+	</update>
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM p_classify
+		WHERE id = #{id} OR parent_ids LIKE 
+		<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+		<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
+        <if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE p_classify SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id} OR parent_ids LIKE 
+		<if test="dbName == 'oracle'">'%,'||#{id}||',%'</if>
+		<if test="dbName == 'mssql'">'%,'+#{id}+',%'</if>
+        <if test="dbName == 'mysql'">CONCAT('%,', #{id}, ',%')</if>
+	</update>
+	
+</mapper>
