@@ -230,12 +230,12 @@ public class LoginController extends BaseController{
 		
 		
 		//
-		MailBox mailBox = new MailBox();
+		/*MailBox mailBox = new MailBox();
 		mailBox.setReceiver(UserUtils.getUser());
 		mailBox.setReadstatus("0");//筛选未读
 		Page<MailBox> mailPage = mailBoxService.findPage(new MailPage<MailBox>(request, response), mailBox); 
 		request.setAttribute("noReadCount", mailBoxService.getCount(mailBox));
-		request.setAttribute("mailPage", mailPage);
+		request.setAttribute("mailPage", mailPage);*/
 		
 		if(UserUtils.getMenuList().size() == 0){
 			return "modules/sys/login/noAuth";

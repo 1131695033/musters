@@ -84,11 +84,11 @@
 	<select id="getChildren" parameterType="String" resultMap="classifyResult">  
         select 
 			<include refid="classifyColumns"/>
-	from p_classify a where a.parent_id = #{id} ORDER BY a.sort 
+		from p_classify a where a.parent_id = #{id} and del_flag = 0 
     </select> 
      
     <select id="hasChildren" parameterType="String" resultType="Boolean">
-        select case when exists(select 1 from p_classify where parent_id = #{id}) then 1 else 0 end from dual
+        select case when exists(select 1 from p_classify where parent_id = #{id} and del_flag = 0) then 1 else 0 end from dual
     </select>
     
 	<select id="findByParentIdsLike" resultType="Classify">
