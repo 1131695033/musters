@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.member.mapper.MemberMapper">
+    
+	<sql id="memberColumns">
+		a.id AS "id",
+		a.account_name AS "accountName",
+		a.password AS "password",
+		a.nickname AS "nickname",
+		a.phone AS "phone",
+		a.type AS "type",
+		a.points AS "points",
+		a.worker_id AS "workerId",
+		a.seller_id AS "sellerId",
+		a.open_id AS "openId",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="memberJoins">
+		
+	</sql>
+	
+    
+	<select id="get" resultType="Member" >
+		SELECT 
+			<include refid="memberColumns"/>
+		FROM a_member a
+		<include refid="memberJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Member" >
+		SELECT 
+			<include refid="memberColumns"/>
+		FROM a_member a
+		<include refid="memberJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Member" >
+		SELECT 
+			<include refid="memberColumns"/>
+		FROM a_member a
+		<include refid="memberJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			${dataScope}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO a_member(
+			id,
+			account_name,
+			password,
+			nickname,
+			phone,
+			type,
+			points,
+			worker_id,
+			seller_id,
+			open_id,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{accountName},
+			#{password},
+			#{nickname},
+			#{phone},
+			#{type},
+			#{points},
+			#{workerId},
+			#{sellerId},
+			#{openId},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE a_member SET 	
+			account_name = #{accountName},
+			password = #{password},
+			nickname = #{nickname},
+			phone = #{phone},
+			type = #{type},
+			points = #{points},
+			worker_id = #{workerId},
+			seller_id = #{sellerId},
+			open_id = #{openId},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!--物理删除-->
+	<update id="delete">
+		DELETE FROM a_member
+		WHERE id = #{id}
+	</update>
+	
+	<!--逻辑删除-->
+	<update id="deleteByLogic">
+		UPDATE a_member SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+	
+	<!-- 根据实体名称和字段名称和字段值获取唯一记录 -->
+	<select id="findUniqueByProperty" resultType="Member" statementType="STATEMENT">
+		select * FROM a_member  where ${propertyName} = '${value}'
+	</select>
+	
+</mapper>
