@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jeeplus.modules.applet.home.mapper.HomeMapper">
+    
+	 <!--1. 首页服务分类 -->
+    <select id="selectHomeClassify"   resultType="classify">
+    	select id,name from p_classify where parent_id=0 and del_flag =0 order by sort
+    </select>
+    
+    <!--2. 服务列表 -->
+    <select id="selectInstall"   resultType="classify" parameterType="string">
+    	select id,name from p_classify where parent_id=#{parentId} and del_flag =0 order by sort
+    </select>
+
+    <!--4.服务商品列表 -->
+    <select id="selectProducts" resultType="Products" parameterType="Products">
+    	select
+    	 a.id AS "id",
+		a.name AS "name",
+		a.classify_id AS "classifyId",
+		a.unit AS "unit",
+		a.status AS "status",
+		a.image_id AS "imageId",
+		a.price AS "price"
+		from p_products a where a.classify_id= #{classifyId} and a.status=0 and  a.del_flag = 0
+    </select>
+  
+	
+</mapper>
